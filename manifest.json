@@ -1,0 +1,15 @@
+{
+  "name": "RCI Apply",
+  "short_name": "RCI Apply",
+  "description": "Bihar - General Administration Department certificates (Residential, Caste, Income, NCL, EWS)",
+  "start_url": "/rci-apply/",
+  "scope": "/rci-apply/",
+  "display": "standalone",
+  "background_color": "#0b5c2e",
+  "theme_color": "#0b5c2e",
+  "orientation": "portrait",
+  "icons": [
+    { "src": "/rci-apply/icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/rci-apply/icons/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

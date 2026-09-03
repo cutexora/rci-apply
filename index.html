@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0b5c2e">
+<link rel="manifest" href="/rci-apply/manifest.json">
 <title>RCI Apply – General Administration Dept</title>
 <style>
   * { margin:0; padding:0; box-sizing:border-box; }
@@ -128,6 +130,11 @@
   <div class="foot">Bihar e-Governance · RTPS · General Administration Dept</div>
 
 <script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function () {
+    navigator.serviceWorker.register('/rci-apply/sw.js').catch(function(){});
+  });
+}
 function toggle(el){
   var head = el;
   var body = head.nextElementSibling;
