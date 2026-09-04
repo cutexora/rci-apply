@@ -1,12 +1,13 @@
 self.addEventListener('install', function (e) {
   e.waitUntil(
-    caches.open('rci-apply-v2').then(function (cache) {
+    caches.open('rci-apply-v3').then(function (cache) {
       return cache.addAll([
         '/rci-apply/',
         '/rci-apply/index.html',
         '/rci-apply/manifest.json',
         '/rci-apply/icons/icon-192.png',
-        '/rci-apply/icons/icon-512.png'
+        '/rci-apply/icons/icon-512.png',
+        '/rci-apply/icons/fab.png'
       ]);
     })
   );
@@ -17,7 +18,7 @@ self.addEventListener('activate', function (e) {
   e.waitUntil(
     caches.keys().then(function (keys) {
       return Promise.all(
-        keys.filter(function (k) { return k !== 'rci-apply-v2'; })
+        keys.filter(function (k) { return k !== 'rci-apply-v3'; })
             .map(function (k) { return caches.delete(k); })
       );
     })
