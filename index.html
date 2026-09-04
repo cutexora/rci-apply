@@ -41,20 +41,6 @@
   .foot { text-align:center; color:#5f7a68; font-size:12px; padding:10px; }
 
   /* Hamburger + Drawer */
-  .hamburger {
-    position:fixed; top:14px; left:14px; z-index:1001;
-    width:40px; height:40px; border:none; cursor:pointer;
-    background:rgba(0,0,0,.25); border-radius:8px;
-    display:flex; flex-direction:column; justify-content:center;
-    align-items:center; gap:5px;
-  }
-  .hamburger span {
-    display:block; width:22px; height:3px; border-radius:2px;
-    background:#fff; transition:transform .3s, opacity .3s;
-  }
-  .hamburger.open span:nth-child(1){ transform:translateY(8px) rotate(45deg); }
-  .hamburger.open span:nth-child(2){ opacity:0; }
-  .hamburger.open span:nth-child(3){ transform:translateY(-8px) rotate(-45deg); }
   .overlay {
     position:fixed; top:0; left:0; width:100%; height:100%;
     background:rgba(0,0,0,.5); z-index:1000; opacity:0; visibility:hidden;
@@ -82,10 +68,6 @@
 </head>
 <body>
   <div class="overlay" id="overlay" onclick="closeDrawer()"></div>
-
-  <button class="hamburger" id="hamburger" aria-label="Menu" onclick="toggleDrawer()">
-    <span></span><span></span><span></span>
-  </button>
 
   <aside class="drawer" id="drawer">
     <div class="drawer-foot">💯 made by cutexora✨️</div>
@@ -188,22 +170,38 @@ function toggle(el){
   document.querySelectorAll('.card-body').forEach(function(b){ b.classList.remove('open'); });
   if(!open){ head.classList.add('open'); body.classList.add('open'); }
 }
-function toggleDrawer(){
-  var drawer = document.getElementById('drawer');
-  var overlay = document.getElementById('overlay');
-  var hamburger = document.getElementById('hamburger');
-  var open = drawer.classList.contains('open');
-  if(open){ closeDrawer(); } else {
-    drawer.classList.add('open');
-    overlay.classList.add('show');
-    hamburger.classList.add('open');
-  }
+function openDrawer(){
+  document.getElementById('drawer').classList.add('open');
+  document.getElementById('overlay').classList.add('show');
 }
 function closeDrawer(){
   document.getElementById('drawer').classList.remove('open');
   document.getElementById('overlay').classList.remove('show');
-  document.getElementById('hamburger').classList.remove('open');
 }
+
+/* Swipe left -> right to open drawer */
+(function initSwipe(){
+  var startX = 0, startY = 0, tracking = false;
+  var edgeZone = 40; // swipe start within 40px from left edge
+
+  document.addEventListener('touchstart', function(e){
+    var t = e.touches[0];
+    startX = t.clientX; startY = t.clientY;
+    tracking = true;
+  }, {passive:true});
+
+  document.addEventListener('touchend', function(e){
+    if(!tracking) return;
+    tracking = false;
+    var t = e.changedTouches[0];
+    var dx = t.clientX - startX;
+    var dy = t.clientY - startY;
+    // open on rightward swipe, larger horizontal than vertical, start near left edge
+    if(dx > 70 && Math.abs(dy) < 80 && startX <= edgeZone){
+      openDrawer();
+    }
+  }, {passive:true});
+})();
 </script>
 </body>
 </html>
